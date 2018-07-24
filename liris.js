@@ -15,9 +15,24 @@ var userInput = process.argv[3];
 if (command === "my-tweets") {
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         for (i = 0; i < 20; i++) {
-            console.log(tweets[i].text);
+            console.log("Tweet " + [i] + ": " + tweets[i].text);
         }
     });
 }
 
-
+if (command === "movie-this") {
+    if(userInput === undefined){
+        userInput = "Mr.Nobody";
+    }
+    request('http://www.omdbapi.com/?apikey=trilogy&t=' + userInput + "&tomatoes=true&r=json", function (error, response, body) {
+        newBody = JSON.parse(body);
+        console.log("Movie: " + newBody.Title)
+        console.log("Release Date: " + newBody.Year)
+        console.log("IMDB: " + newBody.imdbRating)
+        console.log("Tomato Rating: " + newBody.tomatoRating)
+        console.log("Country: " + newBody.Country)
+        console.log("Language: " + newBody.Language)
+        console.log("Plot: " + newBody.Plot)
+        console.log("Actors: " + newBody.Actors)
+    });
+}
