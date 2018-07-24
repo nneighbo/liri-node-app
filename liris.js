@@ -36,3 +36,17 @@ if (command === "movie-this") {
         console.log("Actors: " + newBody.Actors)
     });
 }
+
+if (command === "spotify-this-song"){
+    spotify.search({ type: 'track', query: userInput, limit: 1 }, function(err, data) {
+        if (err) {
+          return console.log('Error occurred: ' + err);
+        }
+    var str = JSON.stringify(data, null, 2)
+
+      console.log("Song: " + data.tracks.items[0].name);
+      console.log("Artist: " + data.tracks.items[0].artists[0].name); 
+      console.log("Album: " + data.tracks.items[0].album.name); 
+      console.log("Preview: " + data.tracks.items[0].preview_url); 
+      });
+}
