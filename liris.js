@@ -1,4 +1,6 @@
 require("dotenv").config();
+var textRead;
+var fs = require("fs")
 var request = require('request');
 var keys = require("./keys.js");
 var Spotify = require('node-spotify-api');
@@ -49,4 +51,22 @@ if (command === "spotify-this-song"){
       console.log("Album: " + data.tracks.items[0].album.name); 
       console.log("Preview: " + data.tracks.items[0].preview_url); 
       });
+}
+
+if (command === "do-what-it-says"){
+    var text = fs.readFile('./random.txt',"utf8", function(err,data){
+         textRead = data.split(",");
+        console.log(textRead[1])
+        spotify.search({ type: 'track', query: textRead[1], limit: 1 }, function(err, data) {
+            if (err) {
+              return console.log('Error occurred: ' + err);
+            }
+        var str = JSON.stringify(data, null, 2)
+    
+          console.log("Song: " + data.tracks.items[0].name);
+          console.log("Artist: " + data.tracks.items[0].artists[0].name); 
+          console.log("Album: " + data.tracks.items[0].album.name); 
+          console.log("Preview: " + data.tracks.items[0].preview_url); 
+          });
+    });
 }
